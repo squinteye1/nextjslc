@@ -4,7 +4,7 @@ import Head from "next/head";
 import { createContext } from "react";
 import { fetchAPI } from "@/lib/strapi/api";
 import { getStrapiMedia } from "@/lib/strapi/media";
-export const GlobalContect = createContext({});
+export const GlobalContext = createContext({});
 
 function MyApp({ Component, pageProps }) {
   const { global } = pageProps;
@@ -13,9 +13,9 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <link rel="shortcut icon" href={getStrapiMedia(global.favicon)} />
       </Head>
-      <GlobalContect.Provider value={global}>
+      <GlobalContext.Provider value={global}>
         <Component {...pageProps} />
-      </GlobalContect.Provider>
+      </GlobalContext.Provider>
     </>
   );
 }
@@ -25,4 +25,5 @@ MyApp.getInitialProps = async (ctx) => {
   const global = await fetchAPI("/global");
   return { ...appProps, pageProps: { global } };
 };
+
 export default MyApp;
